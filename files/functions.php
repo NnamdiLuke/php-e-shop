@@ -64,4 +64,37 @@ function login_user($email,$password){
 
 }
 
+function text_input($data){
+    $name = (isset($data['name'])) ? $data['name'] : "";
+    $attributes = (isset($data['attributes'])) ? $data['attributes'] : "";
+
+    $value = "";
+    $error = "";
+    $error_text = "";
+    if(isset($_SESSION['form'])){
+        if(isset($_SESSION['form']['value'])){
+            if(isset($_SESSION['form']['value'][$name])){
+                $value = $_SESSION['form']['value'][$name];
+            }
+        }
+    };
+
+    if(isset($_SESSION['form'])){
+        if(isset($_SESSION['form']['error'])){
+            if(isset($_SESSION['form']['error'][$name])){
+                $error = $_SESSION['form']['error'][$name];
+                $error_text  = '<div class="form-text text-danger">'.$error.'.</div>';
+            }
+        }
+    };
+    
+    $label = (isset($data['label'])) ? $data['label'] : $name;
+    $value = (isset($data['value'])) ? $data['value'] : $value;
+    $error = (isset($data['error'])) ? $data['error'] : $error;
+    return '
+    <label class="form-label text-capitalize" for="'.$name.'">'.$label.'</label>
+    <input name="'.$name.'" value="'.$value.'" class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>'
+    .$error_text;
+}
+
 
