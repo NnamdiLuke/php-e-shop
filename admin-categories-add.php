@@ -1,9 +1,13 @@
 <?php 
     require_once('files/functions.php');
     protect_area();
-
+    
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-        $_SESSION['form']['value'] = $_POST;
+      $_SESSION['form']['value'] = $_POST;
+      $imgs = upload_images($_FILES);
+      echo "<pre>";
+      print_r($imgs);
+      die();
         $_SESSION['form']['error'] = [];
         $_SESSION['form']['error']['name'] = 'Name too long';
         header('Location: admin-categories-add.php');
@@ -47,12 +51,20 @@
                   <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
                   
                 </div>
-                <form action="admin-categories-add.php" method="post">
+                <form action="admin-categories-add.php" method="post" enctype="multipart/form-data">
                   <div class="mb-3 pb-2">
                     
                     <?= text_input([
                         'name' => 'name'
                     ]) ?>
+                    <div class="row mt-4">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="photo">Category Image</label>
+                          <input type="file" name="photo" accept=".jpg,.jpeg,.png" class="form-control">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
                 </form>
