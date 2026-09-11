@@ -1,6 +1,10 @@
 <?php 
+
     require_once('files/functions.php');
     protect_area();
+    
+    // image compressor
+   
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_SESSION['form']['value'] = $_POST;

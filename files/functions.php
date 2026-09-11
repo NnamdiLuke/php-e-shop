@@ -1,4 +1,11 @@
+
+
 <?php
+
+use stefangabos\Zebra_Image\Zebra_Image;
+
+require_once 'files/Zebra_Image.php';
+
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -120,13 +127,16 @@ function upload_images($files){
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $file_name = time() . "-" .rand(10000,1000000). "." . $ext;
             $destination = 'uploads/' . $file_name;
+            $thumb_destination = 'uploads/thumb_' . $file_name;
             
             $res = move_uploaded_file($file['tmp_name'], $destination);
             if(!$res){
                 continue;
             }
-
+            // after successful upload of image, compress it.
+             $thumb_destination = create_thumb($destination,$thumb_destination);
             $img['src'] = $destination;
+            $img['thumb'] = $thumb_destination;
             $upload_images[] = $img;
         }
     }
@@ -134,4 +144,62 @@ function upload_images($files){
     return $upload_images;
 }
 
+// image compressor 
+// function create_thumb($params = array()){
+function create_thumb($source,$target){
 
+
+    $image = new Zebra_Image();
+    $image->auto_handle_exif_orientation = true;
+    $image->source_path = $source;
+    $image->target_path = $target;
+    
+    $image->preserve_aspect_ratio = true;
+    $image->enlarge_smaller_images = true;
+    $image->preserve_time = true;
+    $image->auto_handle_exif_orientation = true;
+
+    
+    $width = 1200;
+    $height = 1600;
+    $image->jpeg_quality = 50;
+    $image->jpeg_quality = get_jpeg_quality(filesize($source));
+
+    // if(!$image->resize(
+    //     $width,
+    //     $height,
+    //     ZEBRA_IMAGE_CROP_CENTER
+    // )){
+    if(!$image->resize()){
+        return $image->source_path;
+    } else {
+        return $image->target_path;
+    }
+
+
+
+}
+
+function get_jpeg_quality($size){
+    $size = $size / (1024 * 1024);
+
+    $quality = 70;
+
+    if ($size > 5) {
+        $quality = 60;
+    }
+    elseif ($size > 3) {
+        $quality = 65;
+    }
+    elseif ($size > 1) {
+        $quality = 70;
+    }
+    elseif ($size > 0.5) {
+        $quality = 75;
+    }
+    else {
+        $quality = 80;
+    }
+
+    return $quality;
+}
