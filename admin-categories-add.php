@@ -2,11 +2,18 @@
 
     require_once('files/functions.php');
     protect_area();
+
+    // fetch categories
+    $rows = db_select('categories','parent_id = 0');
+    $categories = [];
+    $categories[0] = "No parent";
+    foreach ($rows as $val) {
+      $categories[$val['id']] = $val['name'];
+    }
     
-    // image compressor
    
     
-    
+    // create category
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_SESSION['form']['value'] = $_POST;
 
@@ -14,7 +21,11 @@
       // $imgs = [];
       $data['name'] = $_POST['name'];
       $data['photo'] = json_encode($imgs);
-      $data['parent_id'] = 0;
+      $data['parent_id'] = $_POST['parent_id'];
+      $data['description'] = $_POST['description'];
+      // echo "<pre>";
+      // print_r($data);
+      // die();
 
       if(db_inset('categories',$data)){
         alert('success','Category created successfuly.');
@@ -88,11 +99,7 @@
                           <?= select_input([
                             'name' => 'parent_id',
                             'label' => 'Parent Category',
-                          ],[
-                            1 => 'One',
-                            2 => 'Two',
-                            3 => 'Three',
-                          ]) ?>
+                          ],$categories) ?>
                         </div>
                       </div>
                       
@@ -103,8 +110,18 @@
                         </div>
                       </div>
                     </div>
+                    <!-- description -->
+                    <div class="row mt-4">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="description">Description</label>
+                          <textarea name="description" id="description" class="form-control"></textarea>
+                        </div>
+                      </div>
+                      
+                    </div>
                   </div>
-                  <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
+                  <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Submit</button>
                 </form>
               </div>
             </section>

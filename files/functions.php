@@ -13,6 +13,24 @@ if(session_status() == PHP_SESSION_NONE){
 define('BASE_URL','http://localhost/e-shop');
 $conn = new mysqli('localhost','root','','e-shop');
 
+function db_select($table,$condition = null){
+    $sql = " SELECT * FROM $table ";
+    
+    if($condition != null){
+        $sql = " SELECT * FROM $table WHERE $condition ";
+    }
+    global $conn;
+
+    $res = $conn->query($sql);
+    $rows = [];
+    while($row = $res->fetch_assoc()){
+        $rows[] = $row;
+    }
+
+    return $rows;
+}
+
+// Create objects
 function db_inset($table_name,$data){
     $sql = "INSERT INTO $table_name";
     $column_names ="(";
