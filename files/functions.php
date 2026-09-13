@@ -13,6 +13,42 @@ if(session_status() == PHP_SESSION_NONE){
 define('BASE_URL','http://localhost/e-shop');
 $conn = new mysqli('localhost','root','','e-shop');
 
+function db_inset($table_name,$data){
+    $sql = "INSERT INTO $table_name";
+    $column_names ="(";
+    $column_values ="(";
+    
+    $is_first = true;
+    foreach ($data as $key => $value) {
+        if($is_first){
+            $is_first = false;
+        } else {
+            $column_names .= ",";
+            $column_values .= ",";
+            
+        }
+        $column_names .= $key;
+        $gettype = gettype($value);
+        if($gettype == 'string'){
+            $column_values .= "'$value'";
+        } else {
+            $column_values .= $value;
+        };
+        
+    }
+    $column_names .=")";
+    $column_values .=")";
+    $sql .= $column_names." VALUES ".$column_values;
+
+    global $conn;
+    if($conn->query($sql)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// protected area
 function protect_area(){
     if(!isset($_SESSION['user'])){
         alert('warning','unauthorized access');
@@ -25,6 +61,7 @@ function url($path = "/"){
     return BASE_URL . $path;
 }
 
+// logout function
 function loggout(){
     if(isset($_SESSION['user'])){
         unset($_SESSION['user']);
@@ -34,6 +71,7 @@ function loggout(){
     die();
 }
 
+// is authenticated
 function is_logged_in(){
     if(isset($_SESSION['user'])){
         return true;
@@ -42,12 +80,13 @@ function is_logged_in(){
     }
 }
 
+// Alert
 function alert($type,$message){
     $_SESSION['alert']['type'] = $type;
     $_SESSION['alert']['message'] = $message;
 }
 
-
+// login function
 function login_user($email,$password){
     // check if email exist or not?
     global $conn;
@@ -104,6 +143,49 @@ function text_input($data){
     .$error_text;
 }
 
+function select_input($data,$options){
+    $name = (isset($data['name'])) ? $data['name'] : "";
+    $attributes = (isset($data['attributes'])) ? $data['attributes'] : "";
+
+    $value = "";
+    $error = "";
+    $error_text = "";
+    if(isset($_SESSION['form'])){
+        if(isset($_SESSION['form']['value'])){
+            if(isset($_SESSION['form']['value'][$name])){
+                $value = $_SESSION['form']['value'][$name];
+            }
+        }
+    };
+
+    if(isset($_SESSION['form'])){
+        if(isset($_SESSION['form']['error'])){
+            if(isset($_SESSION['form']['error'][$name])){
+                $error = $_SESSION['form']['error'][$name];
+                $error_text  = '<div class="form-text text-danger">'.$error.'.</div>';
+            }
+        }
+    };
+    
+    $label = (isset($data['label'])) ? $data['label'] : $name;
+    $value = (isset($data['value'])) ? $data['value'] : $value;
+    $error = (isset($data['error'])) ? $data['error'] : $error;
+    return '
+    <label class="form-label text-capitalize" for="'.$name.'">'.$label.'</label>
+    <input>'    
+    .$error_text;
+
+    $select_options = "";
+    foreach ($options as $key => $value) {
+        # code...
+    }
+    $select_tag =  '<select name="'.$name.'" class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>
+        <option value=""></option>
+    </select>';
+
+}
+
+// function to upload image
 function upload_images($files){
     ini_set('memory_limit','512M');
 
@@ -145,7 +227,6 @@ function upload_images($files){
 }
 
 // image compressor 
-// function create_thumb($params = array()){
 function create_thumb($source,$target){
 
 

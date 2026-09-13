@@ -6,16 +6,37 @@
     // image compressor
    
     
+    
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_SESSION['form']['value'] = $_POST;
+
       $imgs = upload_images($_FILES);
-      echo "<pre>";
-      print_r($imgs);
-      die();
-        $_SESSION['form']['error'] = [];
-        $_SESSION['form']['error']['name'] = 'Name too long';
+      // $imgs = [];
+      $data['name'] = $_POST['name'];
+      $data['photo'] = json_encode($imgs);
+      $data['parent_id'] = 0;
+
+      if(db_inset('categories',$data)){
+        alert('success','Category created successfuly.');
+        header('Location: admin-categories.php');
+        unset($_SESSION['form']);
+      } else {
+        alert('danger','Failed to create category, please try again.');
         header('Location: admin-categories-add.php');
-        die();
+      }
+      die();
+
+      /*
+      name	
+      photo	
+      parent_id	
+      description	
+      */ 
+
+        // $_SESSION['form']['error'] = [];
+        // $_SESSION['form']['error']['name'] = 'Name too long';
+        // header('Location: admin-categories-add.php');
+        // die();
     }
 
     require_once('files/header.php');
@@ -62,7 +83,15 @@
                         'name' => 'name'
                     ]) ?>
                     <div class="row mt-4">
-                      <div class="col-12">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <?= text_input([
+                            'name' => 'Parent Category'
+                          ]) ?>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label for="photo">Category Image</label>
                           <input type="file" name="photo" accept=".jpg,.jpeg,.png" class="form-control">
