@@ -85,8 +85,13 @@
                     <div class="row mt-4">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <?= text_input([
-                            'name' => 'Parent Category'
+                          <?= select_input([
+                            'name' => 'parent_id',
+                            'label' => 'Parent Category',
+                          ],[
+                            1 => 'One',
+                            2 => 'Two',
+                            3 => 'Three',
                           ]) ?>
                         </div>
                       </div>

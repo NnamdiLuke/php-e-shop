@@ -170,18 +170,24 @@ function select_input($data,$options){
     $label = (isset($data['label'])) ? $data['label'] : $name;
     $value = (isset($data['value'])) ? $data['value'] : $value;
     $error = (isset($data['error'])) ? $data['error'] : $error;
-    return '
-    <label class="form-label text-capitalize" for="'.$name.'">'.$label.'</label>
-    <input>'    
-    .$error_text;
 
     $select_options = "";
-    foreach ($options as $key => $value) {
-        # code...
+    foreach ($options as $key => $val) {
+        $selected = "";
+        if($key == $value){
+            $selected = "selected";
+        }
+        $select_options .= '<option value="'.$key.'">'. $val .'</option>';
     }
-    $select_tag =  '<select name="'.$name.'" class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>
-        <option value=""></option>
+    $select_tag =  '<select name="'.$name.'" ' .$selected. ' class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>
+        '.$select_options.'
     </select>';
+
+    return '
+    <label class="form-label text-capitalize" for="'.$name.'">'.$label.'</label>'
+    .$select_tag   
+    .$error_text;
+
 
 }
 
