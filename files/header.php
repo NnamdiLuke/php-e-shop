@@ -31,23 +31,7 @@ require_once('files/functions.php');
     <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="css/theme.min.css">
-    <!-- Google Tag Manager-->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                '../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WKV3GT5');
-    </script>
+    
 </head>
 
 <!-- Body-->
@@ -283,69 +267,69 @@ require_once('files/functions.php');
                             </a><a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html"><span class="navbar-tool-tooltip">Wishlist</span>
                                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                             </a>
-                            <?php if(is_logged_in()){  ?>
+                            <?php if (is_logged_in()) {  ?>
                                 <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="account-orders.php">
-                            <?php  } else {?>
-                                <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
-                            <?php  }?>
-                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-                                <div class="navbar-tool-text ms-n3">
-                                    <?php if(is_logged_in()){  ?>
-                                        <small>Hello, <?= $_SESSION['user']['first_name'] ?></small>
-                                    <?php  } else {?>
-                                        <small>Hello, Sign in</small>
-                                    <?php  }?>
-                                    My Account
-                                </div>
-                            </a>
-                            <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html"><span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
-                                <!-- Cart dropdown-->
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
-                                        <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-                                            <div class="widget-cart-item pb-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/01.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">Women Colorblock Sneakers</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$150.<small>00</small></span><span class="text-muted">x 1</span></div>
+                                <?php  } else { ?>
+                                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
+                                    <?php  } ?>
+                                    <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+                                    <div class="navbar-tool-text ms-n3">
+                                        <?php if (is_logged_in()) {  ?>
+                                            <small>Hello, <?= $_SESSION['user']['first_name'] ?></small>
+                                        <?php  } else { ?>
+                                            <small>Hello, Sign in</small>
+                                        <?php  } ?>
+                                        My Account
+                                    </div>
+                                    </a>
+                                    <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html"><span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
+                                        <!-- Cart dropdown-->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                                                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                                                    <div class="widget-cart-item pb-2 border-bottom">
+                                                        <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                                        <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/01.jpg" width="64" alt="Product"></a>
+                                                            <div class="ps-2">
+                                                                <h6 class="widget-product-title"><a href="shop-single-v1.html">Women Colorblock Sneakers</a></h6>
+                                                                <div class="widget-product-meta"><span class="text-accent me-2">$150.<small>00</small></span><span class="text-muted">x 1</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-cart-item py-2 border-bottom">
+                                                        <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                                        <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/02.jpg" width="64" alt="Product"></a>
+                                                            <div class="ps-2">
+                                                                <h6 class="widget-product-title"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h6>
+                                                                <div class="widget-product-meta"><span class="text-accent me-2">$79.<small>50</small></span><span class="text-muted">x 1</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-cart-item py-2 border-bottom">
+                                                        <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                                        <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/03.jpg" width="64" alt="Product"></a>
+                                                            <div class="ps-2">
+                                                                <h6 class="widget-product-title"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h6>
+                                                                <div class="widget-product-meta"><span class="text-accent me-2">$22.<small>50</small></span><span class="text-muted">x 1</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-cart-item py-2 border-bottom">
+                                                        <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                                        <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/04.jpg" width="64" alt="Product"></a>
+                                                            <div class="ps-2">
+                                                                <h6 class="widget-product-title"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h6>
+                                                                <div class="widget-product-meta"><span class="text-accent me-2">$9.<small>00</small></span><span class="text-muted">x 1</span></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/02.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$79.<small>50</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/03.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$22.<small>50</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center"><a class="flex-shrink-0" href="shop-single-v1.html"><img src="img/shop/cart/widget/04.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$9.<small>00</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
+                                                <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                                                    <div class="fs-sm me-2 py-2"><span class="text-muted">Subtotal:</span><span class="text-accent fs-base ms-1">$265.<small>00</small></span></div><a class="btn btn-outline-secondary btn-sm" href="shop-cart.html">Expand cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
+                                                </div><a class="btn btn-primary btn-sm d-block w-100" href="checkout-details.html"><i class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                                            <div class="fs-sm me-2 py-2"><span class="text-muted">Subtotal:</span><span class="text-accent fs-base ms-1">$265.<small>00</small></span></div><a class="btn btn-outline-secondary btn-sm" href="shop-cart.html">Expand cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
-                                        </div><a class="btn btn-primary btn-sm d-block w-100" href="checkout-details.html"><i class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
                                     </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -457,84 +441,8 @@ require_once('files/functions.php');
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
-                                    <div class="dropdown-menu p-0">
-                                        <div class="d-flex flex-wrap flex-sm-nowrap px-2">
-                                            <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
-                                                <div class="widget widget-links mb-4">
-                                                    <h6 class="fs-base mb-3">Shop layouts</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ls.html">Shop Grid - Left Sidebar</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-rs.html">Shop Grid - Right Sidebar</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ft.html">Shop Grid - Filters on Top</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ls.html">Shop List - Left Sidebar</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-rs.html">Shop List - Right Sidebar</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ft.html">Shop List - Filters on Top</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="widget widget-links mb-4">
-                                                    <h6 class="fs-base mb-3">Marketplace</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-category.html">Category Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-single.html">Single Item Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-vendor.html">Vendor Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-cart.html">Cart</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <h6 class="fs-base mb-3">Grocery store</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-catalog.html">Product Catalog</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-single.html">Single Product Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
-                                                <div class="widget widget-links mb-4">
-                                                    <h6 class="fs-base mb-3">Food Delivery</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-category.html">Category Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-single.html">Single Item (Restaurant)</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-cart.html">Cart (Your Order)</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-checkout.html">Checkout (Address &amp; Payment)</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <h6 class="fs-base mb-3">NFT Marketplace<span class="badge bg-danger ms-1">NEW</span></h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v1.html">Catalog v.1</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v2.html">Catalog v.2</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-live.html">Single Item - Auction Live</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-ended.html">Single Item - Auction Ended</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-buy.html">Single Item - Buy Now</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-vendor.html">Vendor Page</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-connect-wallet.html">Connect Wallet</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-create-item.html">Create New Item</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="mega-dropdown-column pt-1 pt-lg-4 px-2 px-lg-3">
-                                                <div class="widget widget-links mb-4">
-                                                    <h6 class="fs-base mb-3">Shop pages</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-categories.html">Shop Categories</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v1.html">Product Page v.1</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v2.html">Product Page v.2</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-cart.html">Cart</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-details.html">Checkout - Details</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-shipping.html">Checkout - Shipping</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-payment.html">Checkout - Payment</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-review.html">Checkout - Review</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-complete.html">Checkout - Complete</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="order-tracking.html">Order Tracking</a></li>
-                                                        <li class="widget-list-item"><a class="widget-list-link" href="comparison.html">Product Comparison</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <li class="nav-item"><a class="nav-link" href="shop.php">Shop</a>
+                                    
                                 </li>
                                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Account</a>
                                     <ul class="dropdown-menu">
