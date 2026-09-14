@@ -157,7 +157,7 @@ function text_input($data){
     $error = (isset($data['error'])) ? $data['error'] : $error;
     return '
     <label class="form-label text-capitalize" for="'.$name.'">'.$label.'</label>
-    <input name="'.$name.'" value="'.$value.'" class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>'
+    <input name="'.$name.'" value="'.$value.'" class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$label.'" '.$attributes.'>'
     .$error_text;
 }
 
@@ -197,7 +197,7 @@ function select_input($data,$options){
         }
         $select_options .= '<option value="'.$key.'">'. $val .'</option>';
     }
-    $select_tag =  '<select name="'.$name.'" ' .$selected. ' class="form-control text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>
+    $select_tag =  '<select name="'.$name.'" ' .$selected. ' class="form-select text-capitalize" type="text"  id="'.$name.'"  placeholder="'.$name.'" '.$attributes.'>
         '.$select_options.'
     </select>';
 

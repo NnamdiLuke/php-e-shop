@@ -21,7 +21,7 @@
       // $imgs = [];
       $data['name'] = $_POST['name'];
       $data['photo'] = json_encode($imgs);
-      $data['parent_id'] = $_POST['parent_id'];
+      $data['parent_id'] = (int)( $_POST['parent_id']);
       $data['description'] = $_POST['description'];
       // echo "<pre>";
       // print_r($data);
