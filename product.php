@@ -1,11 +1,29 @@
 <?php 
-    require_once('files/header.php');
-    require_once('files/functions.php');
-    $products = db_select('products','1 ORDER BY id DESC');
+  $id = 0;
+  if(isset($_GET['id'])){
+    $id = ((int)($_GET['id']));
+  }
+  if($id < 1){
+    die("product not found");
+  }
 
+  require_once('files/header.php');
+  require_once('files/functions.php');
+  
+  $data = get_product($id);
+  $pro = $data['pro'];
+  $cat = $data['cat'];
 
-    // echo "<pre>";
-    // print_r($products);
+  if($pro == null){
+    die("Product not found");
+  }
+  if($cat == null){
+    die("Category not found");
+  }
+
+  echo "<pre>";
+  print_r($data);
+
 ?>
 
 <!-- Page Title-->
