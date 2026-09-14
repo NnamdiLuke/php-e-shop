@@ -308,3 +308,27 @@ function get_jpeg_quality($size){
 
     return $quality;
 }
+
+// get photos
+function get_product_thumbnail($json){
+    $img = "assets/no_image.jpg";
+
+    if($json == null){
+        return $img;
+    }
+    if(strlen($img) < 4){
+        return $img;
+    }
+    $objects = json_decode($json);
+
+    if(empty($objects)){
+         return $img;
+    }
+    
+    if(!isset($objects[0]->thumb)){
+        return $img;
+    }
+
+    return $objects[0]->thumb;
+
+}

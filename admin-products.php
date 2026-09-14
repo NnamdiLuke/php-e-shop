@@ -1,44 +1,14 @@
 <?php 
-
     require_once('files/functions.php');
     protect_area();
 
-    // fetch categories
-    $rows = db_select('categories','parent_id != 0');
-    $categories = [];
-    $categories[0] = "Select Child Category";
-    foreach ($rows as $val) {
-      $categories[$val['id']] = $val['name'];
-    }
+    // fetch products
+    $products = db_select('products','1 ORDER BY id DESC');
+    // echo "<pre>";
+    // print_r($products[0]['photos']);
+    // die();
+   ;
     
-   
-    
-    // create products
-    if($_SERVER['REQUEST_METHOD'] == "POST"){
-      $_SESSION['form']['value'] = $_POST;
-      
-      $imgs = upload_images($_FILES);
-      // $imgs = [];
-      $data['name'] = $_POST['name'];
-      $data['buying_price'] = $_POST['buying_price'];
-      $data['price'] = $_POST['price'];
-      $data['photos'] = json_encode($imgs);
-      $data['category_id'] = (int)( $_POST['parent_id']);
-      $data['description'] = $_POST['description'];
-      $data['user_id'] = $_SESSION['user']['id'];
-      
-  
-
-      if(db_inset('products',$data)){
-        alert('success','Product created successfuly.');
-        header('Location: admin-products.php');
-        unset($_SESSION['form']);
-      } else {
-        alert('danger','Failed to create product, please try again.');
-        header('Location: admin-products-add.php');
-      }
-      die();
-    }
 
     require_once('files/header.php');
 ?>
@@ -58,7 +28,7 @@
             </nav>
           </div>
           <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-            <h1 class="h3 text-light mb-0">Create Product</h1>
+            <h1 class="h3 text-light mb-0">Products</h1>
           </div>
         </div>
       </div>
@@ -73,112 +43,49 @@
           <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
               <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
                 <!-- Title-->
-                <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
-                  <h2 class="h3 py-2 me-2 mt-5 text-center text-sm-start">Add New Product</h2>
+                <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
+                  <h2 class="h3 py-2 me-2 text-center text-sm-start">Your Products<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">5</span></h2>
                   <div class="py-2">
-                    <?= select_input([
-                      'name' => 'parent_id',
-                      'label' => 'Parent Category',
-                    ],$categories) ?>
+                    <div class="d-flex flex-nowrap align-items-center pb-3">
+                      <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">Sort by:</label>
+                      <select class="form-select form-select-sm me-2" id="sorting">
+                        <option>Date Created</option>
+                        <option>Product Name</option>
+                        <option>Price</option>
+                        <option>Your Rating</option>
+                        <option>Updates</option>
+                      </select>
+                      <button class="btn btn-outline-secondary btn-sm px-2" type="button"><i class="ci-arrow-up"></i></button>
+                    </div>
                   </div>
                 </div>
-                <form action="admin-products-add.php" method="post" enctype="multipart/form-data">
-                  <div class="mb-3 pb-2">
+                <!-- Product-->
+                 <?php 
+                 foreach ($products as $key => $pro) {
                   
-
-                    <div class="row mt-4">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <?= text_input([
-                            'name' => 'name',
-                            'label' => 'Product Name'
-                          ]) ?>
-                        </div>
+                 
+                 ?>
+                 
+                  <div class="d-block d-sm-flex align-items-center py-4 border-bottom">
+                    <a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="marketplace-single.html" style="width: 12.5rem;">
+                        <img class="rounded-3" src="<?= get_product_thumbnail($pro['photos']) ?>" alt="Product">
+                    </a>
+                    <div class="text-center text-sm-start">
+                      <h3 class="h6 product-title mb-2"><a href="marketplace-single.html"><?= $pro['name'] ?></a></h3>
+                      <div class="d-inline-block text-accent">$<?= $pro['price'] ?></div>
+                      <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Sales: <span class="fw-medium">26</span></div>
+                      <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Earnings: <span class="fw-medium">$327.<small>60</small></span></div>
+                      <div class="d-flex justify-content-center justify-content-sm-start pt-3">
+                        <button class="btn bg-faded-accent btn-icon me-2" type="button" data-bs-toggle="tooltip" title="Download"><i class="ci-download text-accent"></i></button>
+                        <button class="btn bg-faded-info btn-icon me-2" type="button" data-bs-toggle="tooltip" title="Edit"><i class="ci-edit text-info"></i></button>
+                        <button class="btn bg-faded-danger btn-icon" type="button" data-bs-toggle="tooltip" title="Delete"><i class="ci-trash text-danger"></i></button>
                       </div>
-                    </div>
-                    
-                    <div class="row mt-2">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <?= text_input([
-                            'name' => 'buying_price',
-                            'label' => 'Buying Price'
-                          ]) ?>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <?= text_input([
-                            'name' => 'price',
-                            'label' => 'Selling Price'
-                          ]) ?>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mt-4">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <?= select_input([
-                            'name' => 'parent_id',
-                            'label' => 'Parent Category',
-                          ],$categories) ?>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row g-2 mt-3">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 1</label>
-                          <input type="file" name="photo_1" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 2</label>
-                          <input type="file" name="photo_2" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 3</label>
-                          <input type="file" name="photo_3" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 4</label>
-                          <input type="file" name="photo_4" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 5</label>
-                          <input type="file" name="photo_5" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="photo">Product Photo 6</label>
-                          <input type="file" name="photo_6" accept=".jpg,.jpeg,.png" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- description -->
-                    <div class="row mt-4">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <label for="description">Description</label>
-                          <textarea name="description" id="description" class="form-control"></textarea>
-                        </div>
-                      </div>
-                      
                     </div>
                   </div>
-                  <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Submit</button>
-                </form>
+
+                 <?php } ?>
+                
+                
               </div>
             </section>
         </div>
