@@ -13,6 +13,41 @@ if(session_status() == PHP_SESSION_NONE){
 define('BASE_URL','http://localhost/e-shop');
 $conn = new mysqli('localhost','root','','e-shop');
 
+function fake_products_generator(){
+    // 	user_id	
+    $name =[
+        'Kinglaman 1/4/5/6 Pack Men\'s Workout Gym Dry Fit Short Sleeve T Shirts',
+        '5 Pack Workout Shirts for Men Gym Black Moisture Wicking Quick Dry T Shirts',
+        'Mens Sweatpants with Zipper Pockets Lightweight Athletic Joggers for Workout Running Gym Track Casual Wear',
+        'Reebok Men\'s Strike Short Sleeve Crewneck T-Shirt, Standard Fit, Lightweight Stretch Poly Jersey Fabric',
+        '5 Pack Athletic Gym Mens Shorts - Workout Black Quick Dry Basketball Shorts'
+    ];
+    $desc = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut eaque totam a, ipsum dignissimos vel magnam nemo. Similique, odit est!";
+
+    $photos = [];
+    for ($i=1; $i < 20; $i++) { 
+        $pic['src'] = 'uploads/'.$i.".jpg";
+        $pic['thumb'] = 'uploads/'.$i.".jpg";
+        $photos[] = $pic;
+    }
+    
+    $categories = [8,9];
+    for ($i=0; $i < 20; $i++) { 
+        shuffle($name);
+        shuffle($photos);
+        shuffle($categories);
+        $pro['name'] = $name[1];
+        $pro['buying_price'] = rand(1000,5000);
+        $pro['price'] = rand(1000,5000);
+        $pro['description'] = $desc;
+        $pro['photos'] = json_encode($photos);
+        $pro['category_id'] = $categories[0];
+        $pro['user_id'] = 2;
+
+        db_inset('products',$pro);
+    }
+
+}
 function get_product($id){
     $sql = " SELECT * FROM products WHERE id = $id ";
     global $conn;
@@ -46,39 +81,45 @@ function db_select($table,$condition = null){
 }
 
 // Create objects
-function db_inset($table_name,$data){
+function db_inset($table_name, $data)
+{
+    global $conn;
+
     $sql = "INSERT INTO $table_name";
-    $column_names ="(";
-    $column_values ="(";
-    
+    $column_names = "(";
+    $column_values = "(";
+
     $is_first = true;
+
     foreach ($data as $key => $value) {
-        if($is_first){
+
+        if ($is_first) {
             $is_first = false;
         } else {
             $column_names .= ",";
             $column_values .= ",";
-            
         }
+
         $column_names .= $key;
-        $gettype = gettype($value);
-        if($gettype == 'string'){
+
+        if (is_string($value)) {
+            $value = $conn->real_escape_string($value);
             $column_values .= "'$value'";
         } else {
             $column_values .= $value;
-        };
-        
+        }
     }
-    $column_names .=")";
-    $column_values .=")";
-    $sql .= $column_names." VALUES ".$column_values;
 
-    global $conn;
-    if($conn->query($sql)){
+    $column_names .= ")";
+    $column_values .= ")";
+
+    $sql .= $column_names . " VALUES " . $column_values;
+
+    if ($conn->query($sql)) {
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 // protected area
@@ -336,7 +377,17 @@ function get_product_photos($json){
     if(strlen($json) < 4){
         return $photos;
     }
-    $objects = json_decode($json);
+    $_objects = json_decode($json);
+
+    $objects = [];
+    $i = 0;
+    foreach ($_objects as $key => $value) {
+        if($i > 3){
+            break;
+        }
+        $objects[] = $value;
+        $i++;
+    }
 
     if(empty($objects)){
          return $photos;

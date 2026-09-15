@@ -1,6 +1,8 @@
+
 <?php 
     require_once('files/header.php');
 ?>
+
 
         <!-- Hero slider-->
         <section class="tns-carousel tns-controls-lg">
