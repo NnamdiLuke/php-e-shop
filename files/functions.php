@@ -324,6 +324,29 @@ function get_jpeg_quality($size){
     return $quality;
 }
 
+// get list of photos
+function get_product_photos($json){
+    $img['src'] = "assets/no_image.jpg";
+    $img['thumb'] = "assets/no_image.jpg";
+    $photos[] = $img;
+
+    if($json == null){
+        return $photos;
+    }
+    if(strlen($json) < 4){
+        return $photos;
+    }
+    $objects = json_decode($json);
+
+    if(empty($objects)){
+         return $photos;
+    }
+    
+
+    return $objects;
+
+}
+
 // get photos
 function get_product_thumbnail($json){
     $img = "assets/no_image.jpg";

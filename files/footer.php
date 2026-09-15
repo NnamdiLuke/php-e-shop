@@ -157,6 +157,9 @@
     <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
     <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+    <script src="vendor/lightgallery/lightgallery.min.js"></script>
+    <script src="vendor/lightgallery/plugins/video/lg-video.min.js"></script>
+    
     <!-- Main theme script-->
     <script src="js/theme.min.js"></script>
 </body>
