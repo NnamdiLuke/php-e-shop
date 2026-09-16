@@ -38,6 +38,8 @@
       $cart_items = array_reverse($cart_items);
       
     }
+
+    $user = $_SESSION['user'];
     require_once('files/header.php');
 ?>
 
@@ -63,123 +65,106 @@
         <div class="row">
           <section class="col-lg-8">
             <!-- Steps-->
-            <div class="steps steps-light pt-2 pb-3 mb-5"><a class="step-item active" href="shop-cart.php">
+            <div class="steps steps-light pt-2 pb-3 mb-5">
+              <a class="step-item active" href="shop-cart.php">
                 <div class="step-progress"><span class="step-count">1</span></div>
-                <div class="step-label"><i class="ci-cart"></i>Cart</div></a><a class="step-item active current" href="checkout.php">
+                <div class="step-label"><i class="ci-cart"></i>Cart</div>
+              </a>
+              <a class="step-item active current" href="checkout.php">
                 <div class="step-progress"><span class="step-count">2</span></div>
-                <div class="step-label"><i class="ci-user-circle"></i>Details</div></a><a class="step-item" href="checkout-shipping.php">
+                <div class="step-label"><i class="ci-user-circle"></i>Checkout</div>
+              </a>
+              <a class="step-item" href="review.php">
                 <div class="step-progress"><span class="step-count">3</span></div>
-                <div class="step-label"><i class="ci-package"></i>Shipping</div></a><a class="step-item" href="checkout-payment.pho">
-                <div class="step-progress"><span class="step-count">4</span></div>
-                <div class="step-label"><i class="ci-card"></i>Payment</div></a><a class="step-item" href="checkout-review.php">
-                <div class="step-progress"><span class="step-count">5</span></div>
-                <div class="step-label"><i class="ci-check-circle"></i>Review</div></a></div>
+                <div class="step-label"><i class="ci-check-circle"></i>Review</div>
+              </a>
+            </div>
             <!-- Autor info-->
             <div class="d-sm-flex justify-content-between align-items-center bg-secondary p-4 rounded-3 mb-grid-gutter">
               <div class="d-flex align-items-center">
-                <div class="img-thumbnail rounded-circle position-relative flex-shrink-0"><span class="badge bg-warning position-absolute end-0 mt-n2" data-bs-toggle="tooltip" title="Reward points">384</span><img class="rounded-circle" src="img/shop/account/avatar.jpg" width="90" alt="Susan Gardner"></div>
+                <div class="img-thumbnail rounded-circle position-relative flex-shrink-0">
+                  <span class="badge bg-warning position-absolute end-0 mt-n2" data-bs-toggle="tooltip" title="Reward points"><?= $user['id']?></span>
+                  <img class="rounded-circle" src="img/shop/account/avatar.jpg" width="90" alt="Susan Gardner">
+                </div>
                 <div class="ps-3">
-                  <h3 class="fs-base mb-0">Susan Gardner</h3><span class="text-accent fs-sm">s.gardner@example.com</span>
+                  <h3 class="fs-base mb-0"><?= $user['first_name']." ".$user['last_name'] ?></h3>
+                  <span class="text-accent fs-sm"><?= $user['email'] ?></span>
                 </div>
               </div><a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0" href="account-profile.html"><i class="ci-edit me-2"></i>Edit profile</a>
             </div>
             <!-- Shipping address-->
-            <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Shipping address</h2>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-fn">First Name</label>
-                  <input class="form-control" type="text" id="checkout-fn">
+            <form action="review.php" method="post">
+              <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Shipping address</h2>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <?= text_input([
+                      'name'=>'first_name',
+                      'label'=>'First name',
+                      'value'=> $user['first_name'],
+                      'attributes'=>'required',
+                    ]) ?>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <?= text_input([
+                      'name'=>'last_name',
+                      'label'=>'Last name',
+                      'value'=> $user['last_name'],
+                      'attributes'=>'required',
+                    ]) ?>
+                  </div>
                 </div>
               </div>
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-ln">Last Name</label>
-                  <input class="form-control" type="text" id="checkout-ln">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <?= text_input([
+                      'name'=>'email',
+                      'label'=>'E-mail Address',
+                      'value'=> $user['email'],
+                      'attributes'=>'required',
+                    ]) ?>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <?= text_input([
+                      'name'=>'phone',
+                      'label'=>'Phone Number',
+                      'value'=> $user['phone_number'],
+                      'attributes'=>'required',
+                    ]) ?>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="mb-3">
+                    <?= text_input([
+                      'name'=>'address',
+                      'label'=>'Address',
+                      'attributes'=>'required',
+                    ]) ?>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-email">E-mail Address</label>
-                  <input class="form-control" type="email" id="checkout-email">
+              <!-- Navigation (desktop)-->
+              <div class="d-none d-lg-flex pt-4 mt-3">
+                <div class="w-50 pe-3">
+                  <a class="btn btn-secondary d-block w-100" href="shop-cart.html">
+                    <i class="ci-arrow-left mt-sm-0 me-1"></i>
+                    <span class="d-none d-sm-inline">Back to Cart</span>
+                    <span class="d-inline d-sm-none">Back</span></a>
+                  </div>
+                <div class="w-50 ps-2">
+                  <button type="submit" class="btn btn-primary d-block w-100">
+                    <span class="d-none d-sm-inline">Review</span>
+                    <span class="d-inline d-sm-none">Next</span>
+                    <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                  </button>
                 </div>
               </div>
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-phone">Phone Number</label>
-                  <input class="form-control" type="text" id="checkout-phone">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-company">Company</label>
-                  <input class="form-control" type="text" id="checkout-company">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-country">Country</label>
-                  <select class="form-select" id="checkout-country">
-                    <option>Choose country</option>
-                    <option>Australia</option>
-                    <option>Canada</option>
-                    <option>France</option>
-                    <option>Germany</option>
-                    <option>Switzerland</option>
-                    <option>USA</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-city">Country</label>
-                  <select class="form-select" id="checkout-city">
-                    <option>Choose city</option>
-                    <option>Amsterdam</option>
-                    <option>Berlin</option>
-                    <option>Geneve</option>
-                    <option>New York</option>
-                    <option>Paris</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-zip">ZIP Code</label>
-                  <input class="form-control" type="text" id="checkout-zip">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-address-1">Address 1</label>
-                  <input class="form-control" type="text" id="checkout-address-1">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="mb-3">
-                  <label class="form-label" for="checkout-address-2">Address 2</label>
-                  <input class="form-control" type="text" id="checkout-address-2">
-                </div>
-              </div>
-            </div>
-            <h6 class="mb-3 py-3 border-bottom">Billing address</h6>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" checked id="same-address">
-              <label class="form-check-label" for="same-address">Same as shipping address</label>
-            </div>
-            <!-- Navigation (desktop)-->
-            <div class="d-none d-lg-flex pt-4 mt-3">
-              <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="shop-cart.html"><i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to Cart</span><span class="d-inline d-sm-none">Back</span></a></div>
-              <div class="w-50 ps-2"><a class="btn btn-primary d-block w-100" href="checkout-shipping.html"><span class="d-none d-sm-inline">Proceed to Shipping</span><span class="d-inline d-sm-none">Next</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a></div>
-            </div>
+            </form>
           </section>
           <!-- Sidebar-->
           <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
