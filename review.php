@@ -10,6 +10,7 @@
         $_SESSION['shipping']['address'] = $_POST['address'];
     }
 
+    $detail = $_POST;
     
     
     $cart_count = 0;
@@ -114,24 +115,32 @@ require_once('files/header.php');
                 <div class="col-sm-6">
                   <h4 class="h6">Shipping to:</h4>
                   <ul class="list-unstyled fs-sm">
-                    <li><span class="text-muted">Client:&nbsp;</span>Susan Gardner</li>
-                    <li><span class="text-muted">Address:&nbsp;</span>44 Shirley Ave. West Chicago, IL 60185, USA</li>
-                    <li><span class="text-muted">Phone:&nbsp;</span>+1 (808) 764 554 330</li>
+                    <li><span class="text-muted">Client:&nbsp;</span><?=  $detail['first_name']." ". $detail['last_name'] ?></li>
+                    <li><span class="text-muted">Address:&nbsp;</span><?=  $detail['address'] ?></li>
+                    <li><span class="text-muted">Phone:&nbsp;</span><?=  $detail['phone']?></li>
                   </ul>
                 </div>
                 <div class="col-sm-6">
                   <h4 class="h6">Payment method:</h4>
                   <ul class="list-unstyled fs-sm">
-                    <li><span class="text-muted">Credit Card:&nbsp;</span>**** **** **** 5300</li>
+                    <li><span class="text-muted">Opay</li>
                   </ul>
                 </div>
               </div>
             </div>
             <!-- Navigation (desktop)-->
-            <div class="d-none d-lg-flex pt-4">
-              <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="checkout-payment.html"><i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to Payment</span><span class="d-inline d-sm-none">Back</span></a></div>
-              <div class="w-50 ps-2"><a class="btn btn-primary d-block w-100" href="checkout-complete.html"><span class="d-none d-sm-inline">Complete order</span><span class="d-inline d-sm-none">Complete</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a></div>
-            </div>
+            <form action="submit-order.php" method="post">
+              <div class="d-none d-lg-flex pt-4">
+                <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="checkout.php"><i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to Checkout</span><span class="d-inline d-sm-none">Back</span></a></div>
+                <div class="w-50 ps-2">
+                  <button type="submit" class="btn btn-primary d-block w-100" href="checkout-complete.html">
+                    <span class="d-none d-sm-inline">Complete order</span>
+                    <span class="d-inline d-sm-none">Complete</span>
+                    <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
           </section>
           <!-- Sidebar-->
           <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
